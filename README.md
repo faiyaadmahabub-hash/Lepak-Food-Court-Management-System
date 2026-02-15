@@ -357,9 +357,8 @@ FoodOrderingSystem2.0/
 | TP078574 | Emmanuel Naranendhya Tyatan | 20% each role |
 | TP079309 | Nurul Aiman Binti Raizal Azhar | 20% each role |
 
-**Course**: CT038-3-2-OODJ (Object Oriented Development with Java)
-**Institution**: Asia Pacific University of Technology & Innovation
-**Submission Date**: 22 February 2024
+- **Course**: CT038-3-2-OODJ (Object Oriented Development with Java)
+- **Institution**: Asia Pacific University of Technology & Innovation
 
 ---
 
@@ -463,8 +462,6 @@ This project is developed as part of an academic assignment for **Object Oriente
 ---
 
 ## 📞 Contact
-
-For questions or feedback regarding this project, please contact the team members through the university portal.
 
 **Project Documentation**: Refer to `GROUP 15.pdf` for detailed technical documentation, use case diagrams, and screenshots.
 
