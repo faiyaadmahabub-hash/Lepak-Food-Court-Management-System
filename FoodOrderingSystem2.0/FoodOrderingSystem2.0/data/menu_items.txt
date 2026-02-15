@@ -1,0 +1,4 @@
+IT002|Watermelon Juice|5.0|Drinks|true|VD001
+IT003|Spaghetti|7.0|Food|true|VD001
+1|Drink|25.0|Drink|true|UNKNOWN
+IT001|Burger|5.0|Food|true|VD001

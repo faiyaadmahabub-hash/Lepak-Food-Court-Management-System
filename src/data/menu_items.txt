@@ -1,0 +1,3 @@
+I001|Fried Rice|RM 7
+I002|Burger|RM 9
+I003|Spaghetti|RM 10

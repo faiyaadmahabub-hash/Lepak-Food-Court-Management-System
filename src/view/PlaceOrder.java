@@ -1,0 +1,313 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package view;
+
+import controller.OrderController;
+import controller.MenuController;
+import model.Customer;
+import model.MenuItem;
+import model.Vendor;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+public class PlaceOrder extends javax.swing.JFrame {
+
+    private JTable menuTable;
+    private JTextField quantityField;
+    private JComboBox<String> orderTypeBox;
+    private JLabel totalPriceLabel;
+    private JButton placeOrderButton, cancelButton;
+    private Customer customer;
+    private Vendor selectedVendor;
+
+    public PlaceOrder(Customer customer) {
+        this.customer = customer;
+
+        setTitle("Place Order");
+        setSize(600, 500);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Panel for Menu Items
+        JPanel menuPanel = new JPanel(new BorderLayout());
+        menuPanel.setBorder(BorderFactory.createTitledBorder("Menu Items"));
+        add(menuPanel, BorderLayout.CENTER);
+
+        // Table for Menu Items
+        String[] columnNames = {"Item Name", "Price", "Vendor"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        menuTable = new JTable(model);
+        loadMenuItems(model);
+        JScrollPane scrollPane = new JScrollPane(menuTable);
+        menuPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Order Panel
+        JPanel orderPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+        orderPanel.setBorder(BorderFactory.createTitledBorder("Order Details"));
+        add(orderPanel, BorderLayout.SOUTH);
+
+        orderPanel.add(new JLabel("Quantity:"));
+        quantityField = new JTextField();
+        orderPanel.add(quantityField);
+
+        orderPanel.add(new JLabel("Order Type:"));
+        orderTypeBox = new JComboBox<>(new String[]{"DINE_IN", "TAKEAWAY"});
+        orderPanel.add(orderTypeBox);
+
+        orderPanel.add(new JLabel("Total Price:"));
+        totalPriceLabel = new JLabel("RM 0.00");
+        orderPanel.add(totalPriceLabel);
+
+        placeOrderButton = new JButton("Place Order");
+        cancelButton = new JButton("Cancel");
+        orderPanel.add(placeOrderButton);
+        orderPanel.add(cancelButton);
+
+        // Button Action Listeners
+        placeOrderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                placeOrder();
+            }
+        });
+
+        cancelButton.addActionListener(e -> dispose());
+
+        setVisible(true);
+    }
+
+    private PlaceOrder() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void loadMenuItems(DefaultTableModel model) {
+        List<MenuItem> menuItems = MenuController.getMenuItems();
+        for (MenuItem item : menuItems) {
+            model.addRow(new Object[]{item.getName(), "RM " + item.getPrice(), item.getVendor().getBusinessName()});
+        }
+    }
+
+    private void placeOrder() {
+        int selectedRow = menuTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a menu item.");
+            return;
+        }
+
+        String itemName = (String) menuTable.getValueAt(selectedRow, 0);
+        double itemPrice = Double.parseDouble(menuTable.getValueAt(selectedRow, 1).toString().replace("RM ", ""));
+        String vendorName = (String) menuTable.getValueAt(selectedRow, 2);
+        int quantity;
+        try {
+            quantity = Integer.parseInt(quantityField.getText());
+            if (quantity <= 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid quantity! Enter a positive number.");
+            return;
+        }
+
+        String orderType = (String) orderTypeBox.getSelectedItem();
+
+        MenuItem selectedItem = new MenuItem(itemName, itemPrice, vendorName);
+        selectedVendor = new Vendor(vendorName);
+
+        boolean success = OrderController.placeOrder(customer, selectedVendor, selectedItem, quantity, orderType);
+        if (success) {
+            JOptionPane.showMessageDialog(this, "Order placed successfully!");
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Order placement failed.");
+        }
+    }
+
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtmenuItem = new javax.swing.JTextField();
+        txtQuantity = new javax.swing.JTextField();
+        txtTotalPrice = new javax.swing.JTextField();
+        cmbDeliveryType = new javax.swing.JComboBox<>();
+        btnAddToOrder = new javax.swing.JButton();
+        btnCalculateTotal = new javax.swing.JButton();
+        btnConfirmOrder = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(245, 225, 200));
+
+        jLabel1.setText("Enter Menu Item:");
+
+        jLabel2.setText("Quantity:");
+
+        jLabel3.setText("Delivery Type:");
+
+        jLabel4.setText("Total Price:");
+
+        txtmenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtmenuItemActionPerformed(evt);
+            }
+        });
+
+        txtTotalPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalPriceActionPerformed(evt);
+            }
+        });
+
+        cmbDeliveryType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dine-In", "Takeaway", "Delivery" }));
+
+        btnAddToOrder.setText("Add to Order");
+        btnAddToOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddToOrderActionPerformed(evt);
+            }
+        });
+
+        btnCalculateTotal.setText("Calculate Total");
+
+        btnConfirmOrder.setText("Confirm Order");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAddToOrder)
+                        .addGap(67, 67, 67)
+                        .addComponent(btnCalculateTotal)
+                        .addGap(69, 69, 69)
+                        .addComponent(btnConfirmOrder))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(0, 2, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtQuantity, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTotalPrice, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbDeliveryType, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtmenuItem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(411, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(76, 76, 76)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtmenuItem, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cmbDeliveryType, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(60, 60, 60)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddToOrder)
+                    .addComponent(btnCalculateTotal)
+                    .addComponent(btnConfirmOrder))
+                .addContainerGap(233, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txtmenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtmenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtmenuItemActionPerformed
+
+    private void txtTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalPriceActionPerformed
+
+    private void btnAddToOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddToOrderActionPerformed
+        // TODO add selected menu item to the order
+    }//GEN-LAST:event_btnAddToOrderActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(PlaceOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(PlaceOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(PlaceOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PlaceOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PlaceOrder().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddToOrder;
+    private javax.swing.JButton btnCalculateTotal;
+    private javax.swing.JButton btnConfirmOrder;
+    private javax.swing.JComboBox<String> cmbDeliveryType;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField txtQuantity;
+    private javax.swing.JTextField txtTotalPrice;
+    private javax.swing.JTextField txtmenuItem;
+    // End of variables declaration//GEN-END:variables
+}

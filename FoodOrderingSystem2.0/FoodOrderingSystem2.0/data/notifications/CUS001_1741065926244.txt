@@ -1,0 +1,24 @@
+NOTIFICATION: Transaction Receipt
+TO: Emmanuel
+DATE: 2025-03-04 13:25:26
+------------------------------------
+
+===================================
+          TRANSACTION RECEIPT         
+===================================
+
+Transaction ID: TRX1741065901129
+Date: 2025-03-04 13:25:01
+
+Customer ID: CUS001
+Customer Name: Emmanuel
+
+Transaction Type: Top-Up
+Amount: RM 20.00
+
+Previous Balance: RM 355.00
+New Balance: RM 375.00
+
+===================================
+Thank you for using our service!
+===================================

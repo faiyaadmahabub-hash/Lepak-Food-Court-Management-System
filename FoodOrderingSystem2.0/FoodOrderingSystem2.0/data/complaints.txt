@@ -1,0 +1,2 @@
+COMP1741073578597|ORD1|CUS001|the food taste so bad|1|We are very sorry, we will solve the problem|RESOLVED
+COMP1741098937487|ORD1|CUS001|the food taste so bad|1|We will be careful next time|RESOLVED

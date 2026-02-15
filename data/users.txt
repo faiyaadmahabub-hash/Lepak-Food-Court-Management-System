@@ -1,0 +1,3 @@
+admin|jjj|ADMIN|hh|11|ggg||
+admin|45678|ADMIN|Nurul|45678|Kajang||
+cust1|3456|Customer|faiyad|56789|tt|hhh|555|
