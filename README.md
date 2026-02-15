@@ -33,11 +33,11 @@ The **Lepak Food Court Management System** is a digital platform designed to boo
 
 ### Key Highlights
 
-✅ **Credit System**: Customers use wallet balance instead of cash payments
-✅ **Order Tracking**: Real-time order status updates
-✅ **Review System**: Customers can review orders and delivery runners
-✅ **Revenue Dashboard**: Vendors and delivery runners can track earnings
-✅ **Multi-Delivery Options**: Dine-in, Regular Delivery, and Express Delivery
+- **Credit System**: Customers use wallet balance instead of cash payments
+- **Order Tracking**: Real-time order status updates
+- **Review System**: Customers can review orders and delivery runners
+- **Revenue Dashboard**: Vendors and delivery runners can track earnings
+- **Multi-Delivery Options**: Dine-in, Regular Delivery, and Express Delivery
 
 ---
 
